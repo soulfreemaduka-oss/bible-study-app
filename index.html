@@ -6,140 +6,111 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Bible Study App</title>
 <style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f4f6fb;
-  color: #172033;
-}
-header {
-  background: #092b63;
-  color: white;
-  padding: 24px 16px;
-  text-align: center;
-}
-main {
-  max-width: 600px;
-  margin: auto;
-  padding: 16px;
-}
-.card {
-  background: white;
-  padding: 18px;
-  margin-bottom: 16px;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px #0001;
-}
-select, button {
-  box-sizing: border-box;
-  width: 100%;
-  padding: 13px;
-  margin: 8px 0;
-  border-radius: 8px;
-  font-size: 16px;
-}
-select {
-  border: 1px solid #ccc;
-  background: white;
-}
-button {
-  background: #1555b8;
-  color: white;
-  border: 0;
-  font-weight: bold;
-}
-.original {
-  font-size: 25px;
-  line-height: 1.9;
-  text-align: right;
-  overflow-wrap: anywhere;
-}
-.english {
-  font-size: 18px;
-  line-height: 1.7;
-}
-.label {
-  color: #1555b8;
-  font-weight: bold;
-}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f6fb;color:#172033}
+header{background:#092b63;color:white;padding:22px 16px;text-align:center}
+main{max-width:700px;margin:auto;padding:14px}
+.card{background:white;padding:18px;margin-bottom:16px;border-radius:12px;box-shadow:0 2px 8px #0001}
+select,button{box-sizing:border-box;width:100%;padding:13px;margin:8px 0;border-radius:8px;font-size:16px}
+select{border:1px solid #ccc;background:white}
+button{background:#1555b8;color:white;border:0;font-weight:bold}
+.original{font-size:27px;line-height:1.9;text-align:right;overflow-wrap:anywhere}
+.translit{font-size:17px;line-height:1.8;color:#1555b8}
+.english{font-size:18px;line-height:1.7}
+.label{color:#1555b8;font-weight:bold}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+th,td{padding:10px 6px;text-align:left;border-bottom:1px solid #e2e6ee;vertical-align:top}
+th{background:#edf2fa}
+.word{font-size:21px}
+.small{font-size:13px;color:#697386}
 </style>
 </head>
 <body>
-
 <header>
-  <h1>📖 Bible Study</h1>
-  <p>Explore Scripture in Hebrew, Greek and English</p>
+<h1>📖 Bible Study</h1>
+<p>Hebrew · Greek · Transliteration · English</p>
 </header>
-
 <main>
-  <section class="card">
-    <h2>Welcome</h2>
-    <p>Study God's Word and explore the languages
-    in which the Scriptures were written.</p>
-  </section>
-
-  <section class="card">
-    <h2>Scripture Reader</h2>
-
-    <label for="testament">Choose a testament</label>
-    <select id="testament" onchange="showVerse()">
-      <option value="old">Old Testament — Hebrew</option>
-      <option value="new">New Testament — Greek</option>
-    </select>
-
-    <div id="passage"></div>
-  </section>
-
-  <section class="card">
-    <h2>Coming Study Tools</h2>
-    <ul>
-      <li>Word-by-word Hebrew and Greek</li>
-      <li>Strong's concordance numbers</li>
-      <li>Definitions and grammar</li>
-      <li>Offline Bible reading</li>
-      <li>Bookmarks and personal notes</li>
-    </ul>
-    <p>These features will be built in later steps.</p>
-  </section>
+<section class="card">
+<h2>Scripture Reader</h2>
+<label for="testament">Choose a testament</label>
+<select id="testament" onchange="showVerse()">
+<option value="old">Old Testament — Hebrew</option>
+<option value="new">New Testament — Greek</option>
+</select>
+<div id="passage"></div>
+</section>
+<section class="card">
+<h2>About transliteration</h2>
+<p>Transliteration represents the sounds of Hebrew and Greek words using Latin letters. It helps you begin learning how to pronounce them.</p>
+<p class="small">Pronunciation conventions vary. Transliteration is a study aid, not a substitute for learning the original scripts.</p>
+</section>
 </main>
-
 <script>
 const verses = {
-  old: {
-    reference: "Genesis 1:1",
-    language: "Original Hebrew",
-    original:
-      "בְּרֵאשִׁית בָּרָא אֱלֹהִים אֵת הַשָּׁמַיִם וְאֵת הָאָרֶץ׃",
-    english:
-      "In the beginning, God created the heavens and the earth."
-  },
-  new: {
-    reference: "John 1:1",
-    language: "Original Greek",
-    original:
-      "Ἐν ἀρχῇ ἦν ὁ λόγος, καὶ ὁ λόγος ἦν πρὸς τὸν θεόν, καὶ θεὸς ἦν ὁ λόγος.",
-    english:
-      "In the beginning was the Word, and the Word was with God, and the Word was God."
-  }
+old: {
+reference:"Genesis 1:1",
+language:"Hebrew",
+original:"בְּרֵאשִׁית בָּרָא אֱלֹהִים אֵת הַשָּׁמַיִם וְאֵת הָאָרֶץ׃",
+transliteration:"Bereshit bara Elohim et hashamayim ve'et ha'aretz.",
+english:"In the beginning, God created the heavens and the earth.",
+words:[
+["בְּרֵאשִׁית","Bereshit","In the beginning"],
+["בָּרָא","Bara","Created"],
+["אֱלֹהִים","Elohim","God"],
+["אֵת","Et","Direct-object marker; usually not translated"],
+["הַשָּׁמַיִם","Hashamayim","The heavens"],
+["וְאֵת","Ve'et","And + direct-object marker"],
+["הָאָרֶץ","Ha'aretz","The earth"]
+]
+},
+new: {
+reference:"John 1:1",
+language:"Greek",
+original:"Ἐν ἀρχῇ ἦν ὁ λόγος, καὶ ὁ λόγος ἦν πρὸς τὸν θεόν, καὶ θεὸς ἦν ὁ λόγος.",
+transliteration:"En archē ēn ho logos, kai ho logos ēn pros ton theon, kai theos ēn ho logos.",
+english:"In the beginning was the Word, and the Word was with God, and the Word was God.",
+words:[
+["Ἐν","En","In"],
+["ἀρχῇ","archē","Beginning"],
+["ἦν","ēn","Was"],
+["ὁ","ho","The"],
+["λόγος","logos","Word"],
+["καὶ","kai","And"],
+["πρὸς","pros","With / toward"],
+["τὸν","ton","The"],
+["θεόν","theon","God"],
+["θεὸς","theos","God"],
+["ἦν","ēn","Was"]
+]
+}
 };
 
-function showVerse() {
-  const choice = document.getElementById("testament").value;
-  const verse = verses[choice];
-
-  document.getElementById("passage").innerHTML = `
-    <h3>${verse.reference}</h3>
-    <p class="label">${verse.language}</p>
-    <p class="original" lang="${choice === "old" ? "he" : "el"}"
-       dir="rtl">${verse.original}</p>
-    <hr>
-    <p class="label">World English Bible (WEB)</p>
-    <p class="english">${verse.english}</p>
-  `;
+function showVerse(){
+const key=document.getElementById("testament").value;
+const v=verses[key];
+const lang=key==="old"?"he":"el";
+let rows="";
+v.words.forEach(w=>{
+rows+=`<tr><td><span class="word" lang="${lang}">${w[0]}</span></td><td>${w[1]}</td><td>${w[2]}</td></tr>`;
+});
+document.getElementById("passage").innerHTML=`
+<h3>${v.reference}</h3>
+<p class="label">Original ${v.language}</p>
+<p class="original" lang="${lang}" dir="rtl">${v.original}</p>
+<p class="label">Transliteration</p>
+<p class="translit">${v.transliteration}</p>
+<hr>
+<p class="label">World English Bible (WEB)</p>
+<p class="english">${v.english}</p>
+<h3>Word-by-word study</h3>
+<div style="overflow-x:auto">
+<table>
+<thead><tr><th>Original</th><th>Transliteration</th><th>Meaning</th></tr></thead>
+<tbody>${rows}</tbody>
+</table>
+</div>`;
 }
-
 showVerse();
 </script>
-
 </body>
 </html>
