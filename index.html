@@ -93,40 +93,49 @@ const verses = {
   }
 };
 
+
 function showVerse() {
   const key = document.getElementById("testament").value;
   const v = verses[key];
-
   if (!v) return;
 
   const lang = key === "old" ? "he" : "el";
   let rows = "";
 
-  v.words.forEach(w => {
+  v.words.forEach((w, i) => {
     rows += `
       <tr>
-        <td><span class="word" lang="${lang}">${w[0]}</span></td>
+        <td>
+          <button type="button"
+            class="word"
+            style="width:auto;margin:0;padding:5px;background:#edf2fa;color:#092b63"
+            onclick="showWordStudy(${i})">
+            <span lang="${lang}">${w[0]}</span>
+          </button>
+        </td>
         <td>${w[1]}</td>
         <td>${w[2]}</td>
-        <td>${w[3]}</td>
-        <td>${w[4]}</td>
+        <td>${w[3] || "—"}</td>
+        <td>${w[4] || "Not yet added"}</td>
       </tr>`;
   });
 
   document.getElementById("passage").innerHTML = `
     <h3>${v.reference}</h3>
     <p class="label">Original ${v.language}</p>
-    <p class="original" lang="${lang}" dir="${key === "old" ? "rtl" : "ltr"}">${v.original}</p>
+    <p class="original" lang="${lang}"
+      dir="${key === "old" ? "rtl" : "ltr"}">${v.original}</p>
 
     <p class="label">Transliteration</p>
     <p class="translit">${v.transliteration}</p>
 
     <hr>
-
     <p class="label">World English Bible (WEB)</p>
     <p class="english">${v.english}</p>
 
     <h3>Word-by-word study</h3>
+    <p>Tap any original-language word to study it.</p>
+
     <div style="overflow-x:auto">
       <table>
         <thead>
@@ -142,11 +151,129 @@ function showVerse() {
       </table>
     </div>
 
-    <p class="label">Study note</p>
-    <p>Strong's numbers are concordance references, not definitions by themselves. Examine each word in its sentence and literary context. Grammatical descriptions should be checked against a Hebrew or Greek reference grammar.</p>
-  `;
-       }
-showVerse();    
+    <section id="wordStudy"
+      class="card"
+      style="display:none;margin-top:18px">
+    </section>`;
+}
+
+function showWordStudy(index) {
+  const key = document.getElementById("testament").value;
+  const v = verses[key];
+  if (!v || !v.words[index]) return;
+
+  const w = v.words[index];
+  const strong = w[3] || "—";
+
+  const studies = {
+    H7225: {
+      definition: "Beginning, first part, or starting point.",
+      note: "In Genesis 1:1, this word introduces the account of creation. Its grammatical relationship to the following clause is discussed by Hebrew scholars.",
+      usage: "Genesis 1:1; Proverbs 1:7"
+    },
+    H1254: {
+      definition: "To create; to bring about or establish.",
+      note: "The verb bara is used in the Hebrew Bible with God as its subject in important creation contexts.",
+      usage: "Genesis 1:1; Genesis 1:27"
+    },
+    H430: {
+      definition: "God, god, or gods, according to context.",
+      note: "Elohim has a plural form. In Genesis 1:1 it is used with the singular verb bara, referring to God.",
+      usage: "Genesis 1:1; Deuteronomy 6:4"
+    },
+    H8064: {
+      definition: "Heavens or sky.",
+      note: "The precise sense depends on the passage and its context.",
+      usage: "Genesis 1:1; Psalm 19:1"
+    },
+    H776: {
+      definition: "Earth, land, or ground.",
+      note: "The word may refer to the earth generally or to a particular land.",
+      usage: "Genesis 1:1; Genesis 12:1"
+    },
+    G746: {
+      definition: "Beginning, origin, or first place.",
+      note: "In John 1:1, archē echoes the opening of Genesis. The surrounding passage presents the Word as already existing in the beginning.",
+      usage: "John 1:1; Mark 1:1"
+    },
+    G3056: {
+      definition: "Word, statement, message, or account.",
+      note: "In John 1:1, Logos refers to the Word who was with God and was God. The full meaning must be understood from John's prologue, not from a dictionary gloss alone.",
+      usage: "John 1:1–3; John 1:14"
+    },
+    G2316: {
+      definition: "God or a god, according to context.",
+      note: "In John 1:1, the word appears in two different grammatical constructions. Its final clause requires attention to Greek word order and context.",
+      usage: "John 1:1; John 1:18"
+    },
+    G1722: {
+      definition: "In, among, or by, depending on context.",
+      note: "This preposition commonly takes the dative case. In John 1:1 it introduces the phrase 'in the beginning'.",
+      usage: "John 1:1; John 1:14"
+    },
+    G2532: {
+      definition: "And; sometimes also or even.",
+      note: "A common conjunction connecting words, phrases, or clauses.",
+      usage: "John 1:1; John 1:14"
+    },
+    G3588: {
+      definition: "The definite article: the.",
+      note: "Greek articles indicate grammatical features and can help identify a noun phrase's function. They do not always correspond directly to English 'the'.",
+      usage: "John 1:1; John 1:14"
+    },
+    G4314: {
+      definition: "To, toward, with, or in relation to.",
+      note: "The meaning depends on context. In John 1:1, pros with the accusative is translated 'with' in the WEB.",
+      usage: "John 1:1; John 1:2"
+    },
+    G2258: {
+      definition: "Was; an inflected form of the verb eimi, 'to be'.",
+      note: "In John 1:1, ēn is imperfect indicative active, third-person singular. The imperfect presents the action as ongoing in past time.",
+      usage: "John 1:1; John 1:2"
+    }
+  };
+
+  const s = studies[strong] || {
+    definition: w[2],
+    note: "A fuller lexical entry and independently verified grammatical analysis have not yet been added to this prototype.",
+    usage: "Current passage: " + v.reference
+  };
+
+  const panel = document.getElementById("wordStudy");
+  panel.style.display = "block";
+
+  panel.innerHTML = `
+    <h3>Word study: ${w[0]}</h3>
+    <p class="translit">${w[1]}</p>
+
+    <p class="label">Basic meaning</p>
+    <p>${s.definition}</p>
+
+    <p class="label">Strong's reference</p>
+    <p>${strong}</p>
+
+    <p class="label">Grammar</p>
+    <p>${w[4] || "Not yet added"}</p>
+
+    <p class="label">Meaning in context</p>
+    <p>${s.note}</p>
+
+    <p class="label">Bible usage to investigate</p>
+    <p>${s.usage}</p>
+
+    <p class="small">
+      Study aid: check the original text, context, and a reliable
+      Hebrew or Greek lexicon. Related references are suggested
+      passages, not a complete concordance search.
+    </p>
+
+    <button type="button"
+      onclick="document.getElementById('wordStudy').style.display='none'">
+      Close word study
+    </button>`;
+      }
+      
+showWordStudy();    
 </script>
 </body>
 </html>
