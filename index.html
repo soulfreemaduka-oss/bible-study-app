@@ -2,101 +2,144 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bible Study App</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #f4f6fb;
-      color: #172033;
-    }
-    header {
-      background: #092b63;
-      color: white;
-      text-align: center;
-      padding: 24px 16px;
-    }
-    header h1 {
-      margin: 0 0 8px;
-    }
-    main {
-      max-width: 600px;
-      margin: 20px auto;
-      padding: 16px;
-    }
-    .card {
-      background: white;
-      padding: 18px;
-      margin-bottom: 16px;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px #00000010;
-    }
-    button {
-      background: #1555b8;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      padding: 12px 16px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    select {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 16px;
-    }
-    .verse {
-      font-size: 18px;
-      line-height: 1.7;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bible Study App</title>
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f6fb;
+  color: #172033;
+}
+header {
+  background: #092b63;
+  color: white;
+  padding: 24px 16px;
+  text-align: center;
+}
+main {
+  max-width: 600px;
+  margin: auto;
+  padding: 16px;
+}
+.card {
+  background: white;
+  padding: 18px;
+  margin-bottom: 16px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px #0001;
+}
+select, button {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 13px;
+  margin: 8px 0;
+  border-radius: 8px;
+  font-size: 16px;
+}
+select {
+  border: 1px solid #ccc;
+  background: white;
+}
+button {
+  background: #1555b8;
+  color: white;
+  border: 0;
+  font-weight: bold;
+}
+.original {
+  font-size: 25px;
+  line-height: 1.9;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+.english {
+  font-size: 18px;
+  line-height: 1.7;
+}
+.label {
+  color: #1555b8;
+  font-weight: bold;
+}
+</style>
 </head>
 <body>
-  <header>
-    <h1>📖 Bible Study</h1>
-    <p>Discover the Word in its original languages</p>
-  </header>
 
-  <main>
-    <section class="card">
-      <h2>Welcome</h2>
-      <p>Study Scripture, explore Hebrew and Greek, and grow in understanding.</p>
-    </section>
+<header>
+  <h1>📖 Bible Study</h1>
+  <p>Explore Scripture in Hebrew, Greek and English</p>
+</header>
 
-    <section class="card">
-      <h2>Choose a Testament</h2>
-      <select id="testament">
-        <option value="old">Old Testament — Hebrew</option>
-        <option value="new">New Testament — Greek</option>
-      </select>
-      <button onclick="showStudy()">Start Bible Study</button>
-      <p id="result" class="verse">Your study will appear here.</p>
-    </section>
+<main>
+  <section class="card">
+    <h2>Welcome</h2>
+    <p>Study God's Word and explore the languages
+    in which the Scriptures were written.</p>
+  </section>
 
-    <section class="card">
-      <h2>Study Tools</h2>
-      <p>Next we will add Scripture reading, original-language words, word meanings, and offline access.</p>
-    </section>
-  </main>
+  <section class="card">
+    <h2>Scripture Reader</h2>
 
-  <script>
-    function showStudy() {
-      const testament = document.getElementById("testament").value;
-      const result = document.getElementById("result");
+    <label for="testament">Choose a testament</label>
+    <select id="testament" onchange="showVerse()">
+      <option value="old">Old Testament — Hebrew</option>
+      <option value="new">New Testament — Greek</option>
+    </select>
 
-      if (testament === "old") {
-        result.textContent =
-          "Old Testament selected. Hebrew study tools are coming next.";
-      } else {
-        result.textContent =
-          "New Testament selected. Greek study tools are coming next.";
-      }
-    }
-  </script>
+    <div id="passage"></div>
+  </section>
+
+  <section class="card">
+    <h2>Coming Study Tools</h2>
+    <ul>
+      <li>Word-by-word Hebrew and Greek</li>
+      <li>Strong's concordance numbers</li>
+      <li>Definitions and grammar</li>
+      <li>Offline Bible reading</li>
+      <li>Bookmarks and personal notes</li>
+    </ul>
+    <p>These features will be built in later steps.</p>
+  </section>
+</main>
+
+<script>
+const verses = {
+  old: {
+    reference: "Genesis 1:1",
+    language: "Original Hebrew",
+    original:
+      "בְּרֵאשִׁית בָּרָא אֱלֹהִים אֵת הַשָּׁמַיִם וְאֵת הָאָרֶץ׃",
+    english:
+      "In the beginning, God created the heavens and the earth."
+  },
+  new: {
+    reference: "John 1:1",
+    language: "Original Greek",
+    original:
+      "Ἐν ἀρχῇ ἦν ὁ λόγος, καὶ ὁ λόγος ἦν πρὸς τὸν θεόν, καὶ θεὸς ἦν ὁ λόγος.",
+    english:
+      "In the beginning was the Word, and the Word was with God, and the Word was God."
+  }
+};
+
+function showVerse() {
+  const choice = document.getElementById("testament").value;
+  const verse = verses[choice];
+
+  document.getElementById("passage").innerHTML = `
+    <h3>${verse.reference}</h3>
+    <p class="label">${verse.language}</p>
+    <p class="original" lang="${choice === "old" ? "he" : "el"}"
+       dir="rtl">${verse.original}</p>
+    <hr>
+    <p class="label">World English Bible (WEB)</p>
+    <p class="english">${verse.english}</p>
+  `;
+}
+
+showVerse();
+</script>
+
 </body>
 </html>
