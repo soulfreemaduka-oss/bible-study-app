@@ -46,71 +46,107 @@ th{background:#edf2fa}
 </section>
 </main>
 <script>
+
 const verses = {
-old: {
-reference:"Genesis 1:1",
-language:"Hebrew",
-original:"בְּרֵאשִׁית בָּרָא אֱלֹהִים אֵת הַשָּׁמַיִם וְאֵת הָאָרֶץ׃",
-transliteration:"Bereshit bara Elohim et hashamayim ve'et ha'aretz.",
-english:"In the beginning, God created the heavens and the earth.",
-words:[
-["בְּרֵאשִׁית","Bereshit","In the beginning"],
-["בָּרָא","Bara","Created"],
-["אֱלֹהִים","Elohim","God"],
-["אֵת","Et","Direct-object marker; usually not translated"],
-["הַשָּׁמַיִם","Hashamayim","The heavens"],
-["וְאֵת","Ve'et","And + direct-object marker"],
-["הָאָרֶץ","Ha'aretz","The earth"]
-]
-},
-new: {
-reference:"John 1:1",
-language:"Greek",
-original:"Ἐν ἀρχῇ ἦν ὁ λόγος, καὶ ὁ λόγος ἦν πρὸς τὸν θεόν, καὶ θεὸς ἦν ὁ λόγος.",
-transliteration:"En archē ēn ho logos, kai ho logos ēn pros ton theon, kai theos ēn ho logos.",
-english:"In the beginning was the Word, and the Word was with God, and the Word was God.",
-words:[
-["Ἐν","En","In"],
-["ἀρχῇ","archē","Beginning"],
-["ἦν","ēn","Was"],
-["ὁ","ho","The"],
-["λόγος","logos","Word"],
-["καὶ","kai","And"],
-["πρὸς","pros","With / toward"],
-["τὸν","ton","The"],
-["θεόν","theon","God"],
-["θεὸς","theos","God"],
-["ἦν","ēn","Was"]
-]
-}
+  old: {
+    reference: "Genesis 1:1",
+    language: "Hebrew",
+    original: "בְּרֵאשִׁית בָּרָא אֱלֹהִים אֵת הַשָּׁמַיִם וְאֵת הָאָרֶץ׃",
+    transliteration: "Bereshit bara Elohim et hashamayim ve'et ha'aretz.",
+    english: "In the beginning, God created the heavens and the earth.",
+    words: [
+      ["בְּרֵאשִׁית", "Bereshit", "In the beginning", "H7225", "Noun, feminine singular; construct form"],
+      ["בָּרָא", "Bara", "Created", "H1254", "Verb, Qal perfect, third-person masculine singular"],
+      ["אֱלֹהִים", "Elohim", "God", "H430", "Noun, masculine plural form; singular meaning here"],
+      ["אֵת", "Et", "Direct-object marker", "—", "Particle marking the definite direct object"],
+      ["הַשָּׁמַיִם", "Hashamayim", "The heavens", "H8064", "Noun, masculine plural, with definite article"],
+      ["וְאֵת", "Ve'et", "And + direct-object marker", "—", "Conjunction plus direct-object marker"],
+      ["הָאָרֶץ", "Ha'aretz", "The earth", "H776", "Noun, feminine singular, with definite article"]
+    ]
+  },
+
+  new: {
+    reference: "John 1:1",
+    language: "Greek",
+    original: "Ἐν ἀρχῇ ἦν ὁ λόγος, καὶ ὁ λόγος ἦν πρὸς τὸν θεόν, καὶ θεὸς ἦν ὁ λόγος.",
+    transliteration: "En archē ēn ho logos, kai ho logos ēn pros ton theon, kai theos ēn ho logos.",
+    english: "In the beginning was the Word, and the Word was with God, and the Word was God.",
+    words: [
+      ["Ἐν", "En", "In", "G1722", "Preposition governing the dative"],
+      ["ἀρχῇ", "Archē", "Beginning", "G746", "Noun, dative feminine singular"],
+      ["ἦν", "Ēn", "Was", "G2258", "Verb, imperfect indicative active, third-person singular"],
+      ["ὁ", "Ho", "The", "G3588", "Definite article, nominative masculine singular"],
+      ["λόγος", "Logos", "Word", "G3056", "Noun, nominative masculine singular"],
+      ["καὶ", "Kai", "And", "G2532", "Conjunction"],
+      ["ὁ", "Ho", "The", "G3588", "Definite article, nominative masculine singular"],
+      ["λόγος", "Logos", "Word", "G3056", "Noun, nominative masculine singular"],
+      ["ἦν", "Ēn", "Was", "G2258", "Verb, imperfect indicative active, third-person singular"],
+      ["πρὸς", "Pros", "With / toward", "G4314", "Preposition governing the accusative here"],
+      ["τὸν", "Ton", "The", "G3588", "Definite article, accusative masculine singular"],
+      ["θεόν", "Theon", "God", "G2316", "Noun, accusative masculine singular"],
+      ["καὶ", "Kai", "And", "G2532", "Conjunction"],
+      ["θεὸς", "Theos", "God", "G2316", "Noun, nominative masculine singular"],
+      ["ἦν", "Ēn", "Was", "G2258", "Verb, imperfect indicative active, third-person singular"],
+      ["ὁ", "Ho", "The", "G3588", "Definite article, nominative masculine singular"],
+      ["λόγος", "Logos", "Word", "G3056", "Noun, nominative masculine singular"]
+    ]
+  }
 };
 
-function showVerse(){
-const key=document.getElementById("testament").value;
-const v=verses[key];
-const lang=key==="old"?"he":"el";
-let rows="";
-v.words.forEach(w=>{
-rows+=`<tr><td><span class="word" lang="${lang}">${w[0]}</span></td><td>${w[1]}</td><td>${w[2]}</td></tr>`;
-});
-document.getElementById("passage").innerHTML=`
-<h3>${v.reference}</h3>
-<p class="label">Original ${v.language}</p>
-<p class="original" lang="${lang}" dir="rtl">${v.original}</p>
-<p class="label">Transliteration</p>
-<p class="translit">${v.transliteration}</p>
-<hr>
-<p class="label">World English Bible (WEB)</p>
-<p class="english">${v.english}</p>
-<h3>Word-by-word study</h3>
-<div style="overflow-x:auto">
-<table>
-<thead><tr><th>Original</th><th>Transliteration</th><th>Meaning</th></tr></thead>
-<tbody>${rows}</tbody>
-</table>
-</div>`;
-}
-showVerse();
+function showVerse() {
+  const key = document.getElementById("testament").value;
+  const v = verses[key];
+
+  if (!v) return;
+
+  const lang = key === "old" ? "he" : "el";
+  let rows = "";
+
+  v.words.forEach(w => {
+    rows += `
+      <tr>
+        <td><span class="word" lang="${lang}">${w[0]}</span></td>
+        <td>${w[1]}</td>
+        <td>${w[2]}</td>
+        <td>${w[3]}</td>
+        <td>${w[4]}</td>
+      </tr>`;
+  });
+
+  document.getElementById("passage").innerHTML = `
+    <h3>${v.reference}</h3>
+    <p class="label">Original ${v.language}</p>
+    <p class="original" lang="${lang}" dir="${key === "old" ? "rtl" : "ltr"}">${v.original}</p>
+
+    <p class="label">Transliteration</p>
+    <p class="translit">${v.transliteration}</p>
+
+    <hr>
+
+    <p class="label">World English Bible (WEB)</p>
+    <p class="english">${v.english}</p>
+
+    <h3>Word-by-word study</h3>
+    <div style="overflow-x:auto">
+      <table>
+        <thead>
+          <tr>
+            <th>Original</th>
+            <th>Transliteration</th>
+            <th>Meaning</th>
+            <th>Strong's No.</th>
+            <th>Grammar</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+
+    <p class="label">Study note</p>
+    <p>Strong's numbers are concordance references, not definitions by themselves. Examine each word in its sentence and literary context. Grammatical descriptions should be checked against a Hebrew or Greek reference grammar.</p>
+  `;
+       }
+          
 </script>
 </body>
 </html>
